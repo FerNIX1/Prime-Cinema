@@ -5,7 +5,7 @@
          version="5.0">
     <servlet>
         <servlet-name>UsuarioServlet</servlet-name>
-        <!-- Aquí va la configuración del servlet que manejará la consulta de inicio de sesión cuando se cree los servelet -->
+        <servlet-class>com.udb.primecinema.controller.UserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
