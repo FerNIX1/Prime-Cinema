@@ -1,5 +1,6 @@
 package com.udb.primecinema.controller;
 
+import com.udb.primecinema.beans.UsuarioBeans;
 import com.udb.primecinema.model.UsuariosModel;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -17,6 +18,10 @@ public class UserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        if (request.getParameter("op") == null) {
+            request.getRequestDispatcher("login.jsp").forward(request,response);
+            return;
+        }
         try (PrintWriter out = response.getWriter()) {
             String operacion = request.getParameter("op");
             switch (operacion) {
@@ -37,11 +42,19 @@ public class UserServlet extends HttpServlet {
         processRequest(request, response);
     }
     private void logueo(HttpServletRequest request, HttpServletResponse response) {
-        int IdUsuario = Integer.parseInt(request.getParameter("nombre"));
-        int DUI = Integer.parseInt(request.getParameter("apellido"));
+        int IdUsuario = Integer.parseInt(request.getParameter("IdUsuario"));
+        int DUI = Integer.parseInt(request.getParameter("DUI"));
         try{
-            modelo.Logearse(IdUsuario,DUI);
-            request.getRequestDispatcher("index.jsp").forward(request,response);
+            UsuarioBeans usuario = modelo.Logearse(IdUsuario, DUI);
+            if (usuario != null) {
+                // El inicio de sesión fue exitoso, puedes redirigir a una página de inicio
+                // o a cualquier otra página a la que el usuario debería ser redirigido después del inicio de sesión.
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                // El inicio de sesión falló, redirigir a una página de inicio de sesión con un mensaje de error.
+                request.setAttribute("errorMensaje", "Credenciales inválidas. Por favor, inténtelo de nuevo.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         }catch (SQLException | ServletException | IOException exception ){
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE,null,exception);
         }
