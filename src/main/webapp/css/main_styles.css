@@ -1,0 +1,20 @@
+body{
+    background-color: #4b4845;
+}
+h1{
+    color: #ffb506;
+    text-align: center;
+}
+.form_box{
+    background-color: #6c6662; /* Color de fondo */
+    color: #FFFFFF; /* Texto en color blanco */
+    padding: 20px; /* Espacio interno para el contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    text-align: center; /* Texto centrado */
+    font-size: 20px; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+}
+.navbar{
+    background-color: #f6c454;
+}
