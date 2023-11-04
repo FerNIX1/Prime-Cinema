@@ -19,7 +19,7 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if (request.getParameter("op") == null) {
-            request.getRequestDispatcher("login.jsp").forward(request,response);
+            request.getRequestDispatcher("login.html").forward(request,response);
             return;
         }
         try (PrintWriter out = response.getWriter()) {
@@ -47,13 +47,12 @@ public class UserServlet extends HttpServlet {
         try{
             UsuarioBeans usuario = modelo.Logearse(IdUsuario, DUI);
             if (usuario != null) {
-                // El inicio de sesión fue exitoso, puedes redirigir a una página de inicio
-                // o a cualquier otra página a la que el usuario debería ser redirigido después del inicio de sesión.
-                request.getRequestDispatcher("inicio.jsp").forward(request, response);
+                // El inicio de sesión fue exitoso, redirigir a la URL deseada (sucursales.do)
+                response.sendRedirect(request.getContextPath() + "/sucursales.do");
             } else {
-                // El inicio de sesión falló, redirigir a una página de inicio de sesión con un mensaje de error.
+                // El inicio de sesión falló, redirigir a una página de inicio de sesión con un mensaje de error
                 request.setAttribute("errorMensaje", "Credenciales inválidas. Por favor, inténtelo de nuevo.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("login.html").forward(request, response);
             }
         }catch (SQLException | ServletException | IOException exception ){
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE,null,exception);

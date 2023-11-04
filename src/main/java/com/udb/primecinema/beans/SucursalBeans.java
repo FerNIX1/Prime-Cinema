@@ -1,11 +1,11 @@
 package com.udb.primecinema.beans;
 
 public class SucursalBeans {
-    int ID_sucursal;
-    String Nombre;
-    String Gerente;
-    String Direccion;
-    String Telefono;
+    private int ID_sucursal;
+    private String Nombre;
+    private  String Gerente;
+    private  String Direccion;
+    private  String Telefono;
 
     public SucursalBeans(int ID_Sucursal, String nombre, String Gerente, String direccion, String telefono) {
         this.ID_sucursal = ID_Sucursal;

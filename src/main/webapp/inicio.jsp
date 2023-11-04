@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>PRIMECINEMA - Inicio</title>
@@ -16,10 +17,10 @@
             <div class="col-md-8 form_box">
                 <form>
                     <p>Elegir Sucursal Actual</p>
-                    <select>
-                        <option value="Sucursal 1">Sucursal 1</option>
-                        <option value="Sucursal 2">Sucursal 2</option>
-                        <option value="Sucursal 3">Sucursal 2</option>
+                    <select name="sucursalSeleccionada"> <!-- Nombre para identificar la sucursal seleccionada -->
+                        <c:forEach var="sucursal" items="${sucursales}">
+                            <option value="${sucursal.ID_sucursal}">${sucursal.nombre}</option>
+                        </c:forEach>
                     </select>
                     <input type="submit" class="btn btn-primary btn_cinema" value="Seleccionar"/>
                 </form>
