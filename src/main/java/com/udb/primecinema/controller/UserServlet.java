@@ -49,7 +49,7 @@ public class UserServlet extends HttpServlet {
             if (usuario != null) {
                 // El inicio de sesión fue exitoso, puedes redirigir a una página de inicio
                 // o a cualquier otra página a la que el usuario debería ser redirigido después del inicio de sesión.
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("inicio.jsp").forward(request, response);
             } else {
                 // El inicio de sesión falló, redirigir a una página de inicio de sesión con un mensaje de error.
                 request.setAttribute("errorMensaje", "Credenciales inválidas. Por favor, inténtelo de nuevo.");
