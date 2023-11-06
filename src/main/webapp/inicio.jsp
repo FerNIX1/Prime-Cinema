@@ -15,23 +15,48 @@
         <!--Cartelera de sucursal-->
         <div class="row justify-content-center">
             <div class="col-md-8 form_box">
-                <form>
+                <form action="${pageContext.request.contextPath}/sucursales.do?op=Buscar" method="post">
                     <p>Elegir Sucursal Actual</p>
-                    <select name="sucursalSeleccionada"> <!-- Nombre para identificar la sucursal seleccionada -->
+                    <select id="sucursalSeleccionada" name="sucursalSeleccionada">
                         <c:forEach var="sucursal" items="${sucursales}">
-                            <option value="${sucursal.ID_sucursal}">${sucursal.nombre}</option>
+                            <option value="${sucursal.ID_sucursal}">${sucursal.nombre} - ID: ${sucursal.ID_sucursal}</option>
                         </c:forEach>
                     </select>
                     <input type="submit" class="btn btn-primary btn_cinema" value="Seleccionar"/>
                 </form>
+                <a href="${pageContext.request.contextPath}/sucursales.do">Volver a Buscar</a>
             </div>
             <div class="col-md-8 form_box">
 
-                <h2>Cartelera de sucursal</h2>
+                <h2>Cartelera de sucursal:${funcion.nombreSucursal}</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>IDFuncion</th>
+                        <th>IDSala</th>
+                        <th>IDpelicula</th>
+                        <th>Duracion</th>
+                        <th>NombrePelicula</th>
+                        <th>NombreSala</th>
+                        <th>NombreSucursal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="funcion" items="${funciones}">
+                        <tr>
+                            <td>${funcion.ID_funcion}</td>
+                            <td>${funcion.ID_Sala}</td>
+                            <td>${funcion.ID_pelicula}</td>
+                            <td>${funcion.duracion}</td>
+                            <td>${funcion.nombrepelicula}</td>
+                            <td>${funcion.nombreSala}</td>
+                            <td>${funcion.nombreSucursal}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <!--Busquedas-->
         <div class="row justify-content-center">
             <div class="col-md-6 form_box">
                 <h2> Bucar Peliculas por Sucursal</h2>
@@ -41,6 +66,11 @@
             </div>
         </div>
     </div>
-
+<script>
+    function ocultarSelect() {
+        var select = document.getElementById('sucursalSeleccionada');
+        select.style.display = 'none';
+    }
+</script>
 </body>
 </html>

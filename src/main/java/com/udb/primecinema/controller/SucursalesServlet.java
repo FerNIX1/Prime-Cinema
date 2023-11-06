@@ -1,5 +1,6 @@
 package com.udb.primecinema.controller;
 
+import com.udb.primecinema.beans.FuncionBeans;
 import com.udb.primecinema.beans.SucursalBeans;
 import com.udb.primecinema.beans.UsuarioBeans;
 import com.udb.primecinema.model.SucursalModel;
@@ -28,8 +29,8 @@ public class SucursalesServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String operacion = request.getParameter("op");
             switch (operacion) {
-                case "":
-
+                case "Buscar":
+                  Buscar(request,response);
                     break;
             }
         }
@@ -54,4 +55,23 @@ public class SucursalesServlet extends HttpServlet {
             Logger.getLogger(SucursalesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    private void Buscar(HttpServletRequest request, HttpServletResponse response) {
+        String nombreSucursal = request.getParameter("sucursalSeleccionada");
+        System.out.println(nombreSucursal);
+        try {
+            List<FuncionBeans> funciones = modelo.ListarFunciones(nombreSucursal);
+            System.out.println(funciones);
+            if (funciones != null) {
+                request.setAttribute("funciones", funciones);
+                request.getRequestDispatcher("inicio.jsp").forward(request, response);
+            } else {
+                // Manejar el caso cuando no se encuentran funciones
+                request.setAttribute("errorMensaje", "No se encontraron funciones para esta sucursal.");
+                request.getRequestDispatcher("inicio.jsp").forward(request, response);
+            }
+        } catch (SQLException | ServletException | IOException exception) {
+            Logger.getLogger(SucursalesServlet.class.getName()).log(Level.SEVERE, null, exception);
+        }
+    }
+
 }
