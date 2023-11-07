@@ -1,5 +1,6 @@
 package com.udb.primecinema.model;
 
+import com.udb.primecinema.beans.CarteleraBeans;
 import com.udb.primecinema.beans.FuncionBeans;
 import com.udb.primecinema.beans.SucursalBeans;
 
@@ -31,30 +32,30 @@ public class SucursalModel extends Conexion {
             return null;
         }
     }
-    public List<FuncionBeans> ListarFunciones(String idSucursal) throws SQLException {
+
+    public List<CarteleraBeans> ListarCartelera(String idSucursal) throws SQLException {
         try {
-            List<FuncionBeans> lista = new ArrayList<>();
-            String Sql = "SELECT f.*, p.nombre AS NombrePelicula, s.Nombre AS NombreSala, su.nombre AS NombreSucursal " +
-                    "FROM funcion f " +
-                    "JOIN salas s ON f.ID_sala = s.ID_sala " +
-                    "JOIN sucursales su ON s.ID_sucursal = su.ID_sucursal " +
-                    "JOIN peliculas p ON f.ID_pelicula = p.ID_pelicula " +
-                    "WHERE su.ID_sucursal = ? " +
-                    "GROUP BY f.ID_funcion"; // Agrupar por ID_funcion para obtener solo un registro por función
+            List<CarteleraBeans> lista = new ArrayList<>();
+            String Sql = "SELECT f.ID_sala, p.Nombre, f.duracion, g.Nombre AS Clasificación, c.Nombre AS Género, fr.Nombre AS Formato " +
+                    "     FROM `funcion` f " +
+                    "    INNER JOIN `peliculas` p ON f.ID_pelicula = p.ID_pelicula" +
+                    "    INNER JOIN `generos` g ON p.ID_genero = g.ID_genero" +
+                    "    INNER JOIN `clasificaciones` c ON p.ID_clasificacion = c.ID_clasificacion" +
+                    "    INNER JOIN `formatos` fr ON p.ID_formato = fr.ID_formato" +
+                    "    WHERE (SELECT ID_sala FROM `salas` WHERE ID_sucursal = ?) = f.ID_sala"; // Agrupar por ID_funcion para obtener solo un registro por función
             this.conectar();
             st = conexion.prepareStatement(Sql);
             st.setString(1, idSucursal);
             rs = st.executeQuery();
             while (rs.next()) {
-                FuncionBeans funcionBeans = new FuncionBeans();
-                funcionBeans.setID_funcion(rs.getInt("ID_funcion"));
-                funcionBeans.setID_Sala(rs.getInt("ID_sala"));
-                funcionBeans.setID_pelicula(rs.getInt("ID_pelicula"));
-                funcionBeans.setDuracion(rs.getDouble("duracion"));
-                funcionBeans.setNombrepelicula(rs.getString("NombrePelicula"));
-                funcionBeans.setNombreSala(rs.getString("NombreSala"));
-                funcionBeans.setNombreSucursal(rs.getString("NombreSucursal"));
-                lista.add(funcionBeans);
+                CarteleraBeans funcion = new CarteleraBeans();
+                funcion.setID_sala(rs.getInt("ID_sala"));
+                funcion.setPelicula(rs.getString("Nombre"));
+                funcion.setDuracion(rs.getDouble("duracion"));
+                funcion.setClasificacion(rs.getString("Clasificación"));
+                funcion.setGenero(rs.getString("Género"));
+                funcion.setFormato(rs.getString("Formato"));
+                lista.add(funcion);
             }
             this.desconectar();
             return lista;

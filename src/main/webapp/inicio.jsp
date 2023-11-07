@@ -32,25 +32,23 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>IDFuncion</th>
-                        <th>IDSala</th>
-                        <th>IDpelicula</th>
-                        <th>Duracion</th>
-                        <th>NombrePelicula</th>
-                        <th>NombreSala</th>
-                        <th>NombreSucursal</th>
+                        <th>Sala</th>
+                        <th>Pelicula</th>
+                        <th>Duración</th>
+                        <th>Clasificación</th>
+                        <th>Género</th>
+                        <th>Formato</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="funcion" items="${funciones}">
                         <tr>
-                            <td>${funcion.ID_funcion}</td>
-                            <td>${funcion.ID_Sala}</td>
-                            <td>${funcion.ID_pelicula}</td>
+                            <td>${funcion.ID_sala}</td>
+                            <td>${funcion.pelicula}</td>
                             <td>${funcion.duracion}</td>
-                            <td>${funcion.nombrepelicula}</td>
-                            <td>${funcion.nombreSala}</td>
-                            <td>${funcion.nombreSucursal}</td>
+                            <td>${funcion.clasificacion}</td>
+                            <td>${funcion.genero}</td>
+                            <td>${funcion.formato}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
