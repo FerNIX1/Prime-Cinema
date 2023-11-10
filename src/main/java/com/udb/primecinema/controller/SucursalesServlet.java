@@ -1,5 +1,6 @@
 package com.udb.primecinema.controller;
 
+import com.udb.primecinema.beans.CarteleraBeans;
 import com.udb.primecinema.beans.FuncionBeans;
 import com.udb.primecinema.beans.SucursalBeans;
 import com.udb.primecinema.beans.UsuarioBeans;
@@ -56,10 +57,10 @@ public class SucursalesServlet extends HttpServlet {
         }
     }
     private void Buscar(HttpServletRequest request, HttpServletResponse response) {
-        String nombreSucursal = request.getParameter("sucursalSeleccionada");
-        System.out.println(nombreSucursal);
+        String id_sucursal = request.getParameter("sucursalSeleccionada");
+        System.out.println(id_sucursal);
         try {
-            List<FuncionBeans> funciones = modelo.ListarFunciones(nombreSucursal);
+            List<CarteleraBeans> funciones = modelo.ListarCartelera(id_sucursal);
             System.out.println(funciones);
             if (funciones != null) {
                 request.setAttribute("funciones", funciones);
