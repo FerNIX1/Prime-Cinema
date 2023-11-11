@@ -94,5 +94,15 @@ public class PeliculaModel extends Conexion{
             this.desconectar();
         }
     }
-
+    public void eliminarPeli(int idUsuario) throws SQLException {
+        try {
+            String sql = "DELETE FROM peliculas WHERE ID_pelicula=?";
+            this.conectar();
+            st = conexion.prepareStatement(sql);
+            st.setInt(1, idUsuario);
+            st.executeUpdate();
+        } finally {
+            this.desconectar();
+        }
+    }
 }

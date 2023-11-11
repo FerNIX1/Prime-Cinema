@@ -36,6 +36,9 @@ public class PeliculasServlet extends HttpServlet {
                 case "actualizar":
                     actualizar(request,response);
                     break;
+                case "eliminar":
+                    eliminar(request,response);
+                    break;
             }
         }
     }
@@ -115,6 +118,20 @@ public class PeliculasServlet extends HttpServlet {
             // Actualizar el usuario en la base de datos
             modelo.actualizarPeli(peli);
             // Redirigir a la página de listado después de la actualización
+            response.sendRedirect(request.getContextPath() + "/Peliculas.do?op=imprimir");
+        } catch (SQLException | IOException e) {
+            Logger.getLogger(PeliculasServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    private void eliminar(HttpServletRequest request, HttpServletResponse response) {
+        // Obtener el ID del usuario a eliminar
+        int idUsuario = Integer.parseInt(request.getParameter("id"));
+
+        try {
+            // Eliminar el usuario de la base de datos
+            modelo.eliminarPeli(idUsuario);
+
+            // Redirigir a la página de listado después de la eliminación
             response.sendRedirect(request.getContextPath() + "/Peliculas.do?op=imprimir");
         } catch (SQLException | IOException e) {
             Logger.getLogger(PeliculasServlet.class.getName()).log(Level.SEVERE, null, e);

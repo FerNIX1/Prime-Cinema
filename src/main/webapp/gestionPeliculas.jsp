@@ -91,7 +91,7 @@
                             <td>${pelicula.ID_clasificacion}</td>
                             <td>${pelicula.ID_formato}</td>
                             <td>
-                                <button class="btn btn-danger" onclick="alertaBorrar(${pelicula.ID_pelicula})">Eliminar</button>
+                                <a href="${pageContext.request.contextPath}/Peliculas.do?op=eliminar&id=${pelicula.ID_pelicula}" class="btn btn-danger">Eliminar</a>
                             </td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/Peliculas.do?op=editar&id=${pelicula.ID_pelicula}" class="btn btn-primary">Modificar</a>
