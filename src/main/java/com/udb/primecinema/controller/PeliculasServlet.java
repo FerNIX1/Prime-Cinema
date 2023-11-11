@@ -30,6 +30,12 @@ public class PeliculasServlet extends HttpServlet {
                 case "Agregar":
                  Agregar(request,response);
                     break;
+                case "editar":
+                    editar(request,response);
+                    break;
+                case "actualizar":
+                    actualizar(request,response);
+                    break;
             }
         }
     }
@@ -69,6 +75,49 @@ public class PeliculasServlet extends HttpServlet {
             Logger.getLogger(SucursalesServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+    private void editar(HttpServletRequest request, HttpServletResponse response) {
+        String idStr = request.getParameter("id");
+        System.out.println(idStr);//esto es null
+        if (idStr != null) {
+            try {
+                int userId = Integer.parseInt(idStr);
+                PeliculaBeans peli  = modelo.obtenerPeliculaPorId(userId);
+                request.setAttribute("peli", peli );
+                request.getRequestDispatcher("editarPelicula.jsp").forward(request, response);
+            } catch (NumberFormatException | SQLException | ServletException | IOException e) {
+                Logger.getLogger(PeliculasServlet.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+    private void actualizar(HttpServletRequest request, HttpServletResponse response) {
+        // Obtener los datos del formulario
+        int id = Integer.parseInt(request.getParameter("id"));
+        String nombre = request.getParameter("nombre");
+        int idGenero = Integer.parseInt(request.getParameter("id_genero"));
+        int idClasificacion = Integer.parseInt(request.getParameter("id_clasificacion"));
+        int idFormato = Integer.parseInt(request.getParameter("id_formato"));
+        System.out.println(id);
+        System.out.println(nombre);
+        System.out.println(idGenero);
+        System.out.println(idClasificacion);
+        System.out.println(idFormato);
+        // Crear un objeto UsuariosBean con los nuevos datos
+        PeliculaBeans peli = new PeliculaBeans();
+        peli.setID_pelicula(id);
+        peli.setNombre(nombre);
+        peli.setID_genero(idGenero);
+        peli.setID_clasificacion(idClasificacion);
+        peli.setID_formato(idFormato);
+
+        try {
+            // Actualizar el usuario en la base de datos
+            modelo.actualizarPeli(peli);
+            // Redirigir a la página de listado después de la actualización
+            response.sendRedirect(request.getContextPath() + "/Peliculas.do?op=imprimir");
+        } catch (SQLException | IOException e) {
+            Logger.getLogger(PeliculasServlet.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }

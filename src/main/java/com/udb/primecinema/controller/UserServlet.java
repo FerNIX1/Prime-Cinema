@@ -44,6 +44,7 @@ public class UserServlet extends HttpServlet {
     private void logueo(HttpServletRequest request, HttpServletResponse response) {
         int IdUsuario = Integer.parseInt(request.getParameter("IdUsuario"));
         int DUI = Integer.parseInt(request.getParameter("DUI"));
+        System.out.println(IdUsuario+DUI);
         try{
             UsuarioBeans usuario = modelo.Logearse(IdUsuario, DUI);
             if (usuario != null) {

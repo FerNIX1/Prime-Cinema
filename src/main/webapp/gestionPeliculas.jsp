@@ -78,8 +78,8 @@
                         <th>Género</th>
                         <th>Clasificación</th>
                         <th>Formato</th>
-                        <th>Editar</th>
                         <th>Eliminar</th>
+                        <th>Editar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,8 @@
                             <td>
                                 <button class="btn btn-danger" onclick="alertaBorrar(${pelicula.ID_pelicula})">Eliminar</button>
                             </td>
-                            <td> <button class="btn btn-info" onclick="Table_TO_Form('${pelicula.ID_pelicula}','${pelicula.nombre}','${pelicula.ID_genero}','${pelicula.ID_clasificacion}','${pelicula.ID_formato}')">Modificar</button>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/Peliculas.do?op=editar&id=${pelicula.ID_pelicula}" class="btn btn-primary">Modificar</a>
                             </td>
                         </tr>
                     </c:forEach>

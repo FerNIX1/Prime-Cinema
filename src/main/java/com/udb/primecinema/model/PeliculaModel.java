@@ -57,4 +57,42 @@ public class PeliculaModel extends Conexion{
             this.desconectar();
         }
     }
+    public PeliculaBeans obtenerPeliculaPorId(int peliId) throws SQLException {
+        try {
+            PeliculaBeans pelicula = null;
+            String sql = "SELECT * FROM peliculas WHERE ID_pelicula = ?";
+            this.conectar();
+            st = conexion.prepareStatement(sql);
+            st.setInt(1, peliId);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                pelicula = new PeliculaBeans();
+                pelicula.setID_pelicula(rs.getInt("ID_pelicula"));
+                pelicula.setNombre(rs.getString("Nombre"));
+                pelicula.setID_genero(rs.getInt("ID_genero"));
+                pelicula.setID_clasificacion(rs.getInt("ID_clasificacion"));
+                pelicula.setID_formato(rs.getInt("ID_formato"));
+            }
+            return pelicula;
+        } finally {
+            this.desconectar();
+        }
+    }
+    public void actualizarPeli(PeliculaBeans pelicula) throws SQLException {
+        try {
+            String sql = "UPDATE peliculas SET ID_pelicula=?, Nombre=?, ID_genero=?, ID_clasificacion=?, ID_formato=? WHERE ID_pelicula=?";
+            this.conectar();
+            st = conexion.prepareStatement(sql);
+            st.setString(1, String.valueOf(pelicula.getID_pelicula()));
+            st.setString(2, pelicula.getNombre());
+            st.setString(3, String.valueOf(pelicula.getID_genero()));
+            st.setString(4, String.valueOf(pelicula.getID_clasificacion()));
+            st.setString(5, String.valueOf(pelicula.getID_formato()));  // Asegúrate de que este sea el índice correcto
+            st.setString(6, String.valueOf(pelicula.getID_pelicula()));  // Este es el índice 6
+            st.executeUpdate();
+        } finally {
+            this.desconectar();
+        }
+    }
+
 }
