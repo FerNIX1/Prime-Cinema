@@ -95,7 +95,7 @@ public class SucursalModel extends Conexion {
             // Sentencia SQL para insertar datos en la tabla de películas (peliculas)
             String sql = "INSERT INTO sucursales (ID_sucursal,nombre,Gerente,Direccion,Telefono) VALUES (?, ?, ?, ?, ?)";
 
-            this.conectar(); // Conexión a la base de datos
+            this.conectar();
 
             // Establecer los valores en la sentencia SQL
             st = conexion.prepareStatement(sql);

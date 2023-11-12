@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,7 +18,7 @@
     <<div class="row justify-content-center">
     <div class="col-md-8 form_box">
         <h2>Agregar Salas</h2>
-        <form action="#" method="post" id="formSalas">
+        <form action="${pageContext.request.contextPath}/Salas.do?op=Agregar" method="post" id="formSalas">
             <div class="row d-flex justify-content-center">
                 <div class="form-group col-md-6">
                     <label for="id">Número de Sala:</label>
@@ -32,9 +33,10 @@
             </div>
             <div class="row d-flex justify-content-center">
                 <div class="form-group col-md-6">
-                    <label for="sucursal">Sucursal:</label>
-                    <select id="sucursal" name="sucursal" class="form-select">
-                        <option value="1"> Sucursal 1</option>
+                    <select id="sala" name="salaSucursal">
+                        <c:forEach var="sucursal" items="${sucursales}">
+                            <option value="${sucursal.ID_sucursal}">${sucursal.nombre} - ID: ${sucursal.ID_sucursal}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -61,12 +63,13 @@
             <c:forEach var="sala" items="${requestScope.listaSalas}">
                 <tr>
                     <td>${sala.ID_sala}</td>
-                    <td>${sala.Nombre}</td>
+                    <td>${sala.nombre}</td>
                     <td>${sala.ID_sucursal}</td>
                     <td>
-                        <button class="btn btn-danger" onclick="alertaBorrar(${sala.ID_sala})">Eliminar</button>
+                        <a href="${pageContext.request.contextPath}/Salas.do?op=eliminar&id=${sala.ID_sala}" class="btn btn-danger">Eliminar</a>
                     </td>
-                    <td> <button class="btn btn-info" onclick="Table_TO_Form('${sala.ID_sala}','${sala.Nombre}','${sala.ID_sucursal}')">Modificar</button>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/Salas.do?op=editar&id=${sala.ID_sala}" class="btn btn-primary">Modificar</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -75,30 +78,5 @@
     </div>
 </div>
 </div>
-<script>
-    function alertaBorrar(id)
-    {
-        var opcion = confirm("Esta seguro de eliminar esta sala?");
-        if (opcion == true) {
-            location.href ="../sala.do?operacion=delete&id="+id;
-        }
-    }
-    function Table_TO_Form(id,nombre,id_sucursal)
-    {
-        document.getElementById("id").value=id;
-        document.getElementById("nombre").value=nombre;
-        document.getElementById("sucursal").value=id_sucursal;
-
-        hijo = document.getElementById("id");
-        padre = hijo.parentNode;
-        padre.removeChild(hijo);
-        var btnGuardar = document.getElementById("btn-Agregar-Sala");
-        btnGuardar.setAttribute("onclick", GuardarActualizacion(id));
-    }
-    function ConfirmarActualizacion(id){
-        var form = document.getElementById("formSalas");
-        form.setAttribute("action", "../sala.do?operacion=modificar&id="+id);
-    }
-</script>
 </body>
 </html>
