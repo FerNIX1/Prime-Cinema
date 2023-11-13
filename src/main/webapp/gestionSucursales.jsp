@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -66,17 +67,18 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="sucursal" items="${requestScope.listaSucursales}">
+            <c:forEach var="sucursal" items="${requestScope.sucursales}">
                 <tr>
                     <td>${sucursal.ID_sucursal}</td>
-                    <td>${sucursal.Nombre}</td>
-                    <td>${sucursal.Gerente}</td>
-                    <td>${sucursal.Telefono}</td>
-                    <td>${sucursal.Direccion}</td>
+                    <td>${sucursal.nombre}</td>
+                    <td>${sucursal.gerente}</td>
+                    <td>${sucursal.telefono}</td>
+                    <td>${sucursal.direccion}</td>
                     <td>
-                        <button class="btn btn-danger" onclick="alerta(${sucursal.ID_sucursal})">Eliminar</button>
+                        <a href="${pageContext.request.contextPath}/sucursales.do?op=eliminar&id=${sucursal.ID_sucursal}" class="btn btn-danger">Eliminar</a>
                     </td>
-                    <td> <button class="btn btn-info" onclick="Table_TO_Form('${sucursal.ID_sucursal}','${sucursal.Nombre}','${sucursal.Gerente}','${sucursal.Telefono}','${sucursal.Direccion}')">Modificar</button>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/sucursales.do?op=editar&id=${sucursal.ID_sucursal}" class="btn btn-primary">Modificar</a>
                     </td>
                 </tr>
             </c:forEach>

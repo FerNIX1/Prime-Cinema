@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,7 +18,7 @@
         <<div class="row justify-content-center">
             <div class="col-md-8 form_box">
                 <h2>Agregar Pelicula</h2>
-                <form action="#" method="post" id="formPelicula">
+                <form action="${pageContext.request.contextPath}/Peliculas.do?op=Agregar" method="post" id="formPelicula">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="id">Número de Pelicula:</label>
@@ -59,12 +60,6 @@
                                 <option value="2">3D</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="sucursal">Sucursal:</label>
-                            <select id="sucursal" name="sucursal" class="form-select">
-                                <option value="1">Sucursal 1</option>
-                            </select>
-                        </div>
                     </div>
                     <br>
                     <input type="submit" class="btn btn-primary btn_cinema" id="btn-Agregar-Pelicula" value="Guardar"/>
@@ -83,24 +78,23 @@
                         <th>Género</th>
                         <th>Clasificación</th>
                         <th>Formato</th>
-                        <th>Sucursal</th>
-                        <th>Editar</th>
                         <th>Eliminar</th>
+                        <th>Editar</th>
                     </tr>
                     </thead>
                     <tbody>
                      <c:forEach var="pelicula" items="${requestScope.listaPeliculas}">
                         <tr>
                             <td>${pelicula.ID_pelicula}</td>
-                            <td>${pelicula.Nombre}</td>
+                            <td>${pelicula.nombre}</td>
                             <td>${pelicula.ID_genero}</td>
                             <td>${pelicula.ID_clasificacion}</td>
                             <td>${pelicula.ID_formato}</td>
-                            <td>${pelicula.ID_sucursal}</td>
                             <td>
-                                <button class="btn btn-danger" onclick="alertaBorrar(${pelicula.ID_pelicula})">Eliminar</button>
+                                <a href="${pageContext.request.contextPath}/Peliculas.do?op=eliminar&id=${pelicula.ID_pelicula}" class="btn btn-danger">Eliminar</a>
                             </td>
-                            <td> <button class="btn btn-info" onclick="Table_TO_Form('${pelicula.ID_pelicula}','${pelicula.Nombre}','${pelicula.ID_genero}','${pelicula.ID_clasificacion}','${pelicula.ID_formato}','${pelicula.ID_sucursal}')">Modificar</button>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/Peliculas.do?op=editar&id=${pelicula.ID_pelicula}" class="btn btn-primary">Modificar</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -109,33 +103,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function alertaBorrar(id)
-        {
-            var opcion = confirm("Esta seguro de eliminar esta pelicula");
-            if (opcion == true) {
-                location.href ="../pelicula.do?operacion=delete&id="+id;
-            }
-        }
-        function Table_TO_Form(id, nombre,genero,clasificacion,formato, sucursal)
-        {
-            document.getElementById("id").value=id;
-            document.getElementById("nombre").value=nombre;
-            document.getElementById("genero").value=genero;
-            document.getElementById("clasificacion").value=clasificacion;
-            document.getElementById("formato").value=formato;
-            document.getElementById("sucursal").value=sucursal;
-
-            hijo = document.getElementById("id");
-            padre = hijo.parentNode;
-            padre.removeChild(hijo);
-            var btnGuardar = document.getElementById("btn-Agregar-Pelicula");
-            btnGuardar.setAttribute("onclick", GuardarActualizacion(id));
-        }
-        function ConfirmarActualizacion(id){
-            var formPelicual = document.getElementById("formPelicula");
-            formPelicual.setAttribute(action, "../pelicula.do?operacion=modificar&id="+id);
-        }
-    </script>
 </body>
 </html>
