@@ -2,8 +2,7 @@ package com.udb.primecinema.model;
 
 import com.udb.primecinema.beans.CarteleraBeans;
 
-import java.awt.event.FocusAdapter;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +114,7 @@ public class ComprasModel extends Conexion{
                 return 0;
             } else if (Ocupada == 0) { //Si la Butaca esta DESOCUPADA
                 int id_butaca = rs.getInt("ID_butaca");
-                Update_Butaca(butaca,funcion, id_butaca);
+                Update_Butaca(id_butaca);
                 return id_butaca;
             } else {
                  return 0;
@@ -151,7 +150,7 @@ public class ComprasModel extends Conexion{
         int ID_Butaca = ObtenerID_Butaca(butaca, funcion); //Obtener ID de butaca que se acaba de agregar
         return ID_Butaca;
     }
-    private void Update_Butaca (int butaca, int funcion, int id_butaca) throws SQLException{
+    private void Update_Butaca (int id_butaca) throws SQLException{
         String UpdateSQL = "UPDATE `butacas` SET `Ocupada` = ? WHERE `ID_butaca` = ?";
         this.conectar();
         st = conexion.prepareStatement(UpdateSQL);

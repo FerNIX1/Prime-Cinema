@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: MINEDUCYT
-  Date: 3/11/2023
-  Time: 14:51
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -132,7 +125,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="efectivo">Efectivo a pagar:</label>
-                            <input type="number" id="efectivo" name="efectivo" class="form-control" placeholder="Ingrese Cantidad">
+                            <input type="number" id="efectivo" name="efectivo" class="form-control" placeholder="Ingrese Cantidad" required>
                         </div>
                         <small class="text-danger">${errorFormulario}</small>
                         <small class="text-info">${MensajeExito}</small>

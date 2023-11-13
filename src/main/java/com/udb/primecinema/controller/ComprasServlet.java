@@ -1,6 +1,5 @@
 package com.udb.primecinema.controller;
 
-import com.udb.primecinema.beans.BusquedaBeans;
 import com.udb.primecinema.beans.CarteleraBeans;
 import com.udb.primecinema.beans.SucursalBeans;
 import com.udb.primecinema.model.ComprasModel;
@@ -13,10 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,16 +26,21 @@ public class ComprasServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String op = request.getParameter("operacion");
         System.out.println(op);
-        if(op.equals("mostrar")){
-            mostrar_Sucursales(request,response);
-            response.sendRedirect("venderBoletos.jsp");
-        }  else if(op.equals("VerFunciones")){
-            mostrar_Funciones(request,response);
-        } else if (op.equals("NuevaCompra")) {
-            crear_Compra(request,response);
-            response.sendRedirect("venderBoletos.jsp");
-        } else {
-            response.sendRedirect("venderBoletos.jsp");
+        switch (op) {
+            case "mostrar":
+                mostrar_Sucursales(request, response);
+                response.sendRedirect("venderBoletos.jsp");
+                break;
+            case "VerFunciones":
+                mostrar_Funciones(request, response);
+                break;
+            case "NuevaCompra":
+                crear_Compra(request, response);
+                response.sendRedirect("venderBoletos.jsp");
+                break;
+            default:
+                response.sendRedirect("venderBoletos.jsp");
+                break;
         }
     }
     @Override
@@ -84,7 +86,7 @@ public class ComprasServlet extends HttpServlet {
         String butaca = request.getParameter("butaca");
         int tipoBoleto = Integer.parseInt(request.getParameter("tipo_boleto"));
         int metodoPago = Integer.parseInt(request.getParameter("metodo"));
-        Double efectivo = Double.valueOf(request.getParameter("efectivo"));
+        String efectivo = request.getParameter("efectivo");
         int id_usuario = Integer.parseInt(request.getParameter("usuario_id"));
 
         //Se verifica que NO esten vacios los campos
@@ -103,7 +105,7 @@ public class ComprasServlet extends HttpServlet {
                 modeloCompras.RegistrarVenta(id_usuario, Integer.parseInt(id_funcion), Integer.parseInt(butaca), precio); //Se registra la compra
 
                 if (metodoPago == 1){
-                    double vuelto = modeloCompras.CalcularVuelto(precio, efectivo);
+                    double vuelto = modeloCompras.CalcularVuelto(precio, Double.parseDouble(efectivo));
                     if( vuelto < 0){
                         request.setAttribute("errorFormulario", "Compra no realizada, Efectivo NO suficiente");
                     } else {

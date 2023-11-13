@@ -22,11 +22,14 @@ function DisableInput(){
     } else if (Metodo == 2){
         document.getElementById("efectivo").disabled = true;
         document.getElementById("efectivo").required = false;
+        document.getElementById("efectivo").value = 0;
     }
 }
 function Verificar(){
     var funcion = document.getElementById("funcion").value;
     var butaca = document.getElementById("butaca").value;
+    var efectivo = document.getElementById("efectivo").value;
+    var metodo = document.getElementById("metodo").value;
 
     if (funcion == null){
         alert("Por favor seleccione una Función")
