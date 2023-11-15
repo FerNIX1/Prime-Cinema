@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: MINEDUCYT
-  Date: 3/11/2023
-  Time: 14:46
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,6 +11,56 @@
 </head>
 <body>
 <%@include file="nav_bar.html"%>
+
+<div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 form_box">
+            <h2>Reporte de ventas por sucursal</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Sucursal</th>
+                    <th>Entradas Vendidas</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="sucursal" items="${SucursalReporte}">
+                    <tr>
+                        <td>${sucursal.getNombreSucursal()}</td>
+                        <td>${sucursal.getEntradas()}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 form_box">
+            <h2>Reporte de ingresos por sala</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID Sala</th>
+                    <th>Nombre Sala</th>
+                    <th>Sucursal</th>
+                    <th>Ingresos Totales</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="sala" items="${SalaReporte}">
+                    <tr>
+                        <td>${sala.getID_sala()}</td>
+                        <td>${sala.getNombre_Sala()}</td>
+                        <td>${sala.getNombre_Sucursal()}</td>
+                        <td><p>$ ${sala.getIngreso()} </p></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
