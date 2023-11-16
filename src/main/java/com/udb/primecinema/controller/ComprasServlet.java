@@ -29,17 +29,15 @@ public class ComprasServlet extends HttpServlet {
         switch (op) {
             case "mostrar":
                 mostrar_Sucursales(request, response);
-                response.sendRedirect("venderBoletos.jsp");
                 break;
             case "VerFunciones":
                 mostrar_Funciones(request, response);
                 break;
             case "NuevaCompra":
                 crear_Compra(request, response);
-                response.sendRedirect("venderBoletos.jsp");
                 break;
             default:
-                response.sendRedirect("venderBoletos.jsp");
+                mostrar_Sucursales(request, response);
                 break;
         }
     }
