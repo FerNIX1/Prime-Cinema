@@ -62,7 +62,11 @@ public class ComprasServlet extends HttpServlet {
     }
     private void mostrar_Funciones(HttpServletRequest request, HttpServletResponse response) {
         String id_sucursal = request.getParameter("sucursal");
+
         try {
+            List<SucursalBeans> listaSucursales = modeloSucursales.ListarSucursales();
+            request.setAttribute("sucursales", listaSucursales);
+
             List<CarteleraBeans> funciones = modeloCompras.ListarCartelera(id_sucursal);
             if (funciones != null) {
                 request.setAttribute("funciones", funciones);
@@ -86,6 +90,13 @@ public class ComprasServlet extends HttpServlet {
         int metodoPago = Integer.parseInt(request.getParameter("metodo"));
         String efectivo = request.getParameter("efectivo");
         int id_usuario = Integer.parseInt(request.getParameter("usuario_id"));
+
+        try {
+            List<SucursalBeans> listaSucursales = modeloSucursales.ListarSucursales();
+            request.setAttribute("sucursales", listaSucursales);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         //Se verifica que NO esten vacios los campos
         if (id_funcion.isEmpty()) {

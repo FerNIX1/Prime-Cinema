@@ -24,7 +24,7 @@
                     </select>
                     <input type="submit" class="btn btn-primary btn_cinema" value="Seleccionar"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/sucursales.do">Volver a Buscar</a>
+                <a href="${pageContext.request.contextPath}/sucursales.do?">Volver a Buscar</a>
             </div>
             <div class="col-md-8 form_box">
 
@@ -53,14 +53,6 @@
                     </c:forEach>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6 form_box">
-                <h2> Bucar Peliculas por Sucursal</h2>
-            </div>
-            <div class="col-md-6 form_box">
-                <h2>Buscar salas por Pelicula</h2>
             </div>
         </div>
     </div>
