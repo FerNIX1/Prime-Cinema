@@ -28,6 +28,10 @@ public class UserServlet extends HttpServlet {
                 case "logueo":
                     logueo(request,response);
                     break;
+                case "agregarUsuario":
+                    agregarUsuario(request, response);
+                    break;
+
             }
         }
     }
@@ -59,5 +63,33 @@ public class UserServlet extends HttpServlet {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE,null,exception);
         }
 
+    }
+    private void agregarUsuario(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // Recupera los parámetros del formulario
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            int dui = Integer.parseInt(request.getParameter("dui"));
+            String direccion = request.getParameter("direccion");
+            String telefono = request.getParameter("telefono");
+            String email = request.getParameter("email");
+
+            // Crea un nuevo objeto UsuarioBeans
+            UsuarioBeans nuevoUsuario = new UsuarioBeans();
+            nuevoUsuario.setNombre(nombre);
+            nuevoUsuario.setApellido(apellido);
+            nuevoUsuario.setDUI(dui);
+            nuevoUsuario.setDireccion(direccion);
+            nuevoUsuario.setTelefono(telefono);
+            nuevoUsuario.setEmail(email);
+
+            // Llama al método en el modelo para agregar el usuario
+            modelo.AgregarUsuario(nuevoUsuario);
+
+            // Redirige a la página deseada después de agregar el usuario
+            response.sendRedirect(request.getContextPath() + "/sucursales.do");
+        } catch (SQLException | IOException | NumberFormatException exception) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, exception);
+        }
     }
 }
