@@ -14,13 +14,31 @@
 </head>
 <body>
 
-<%@include file="nav_bar.html"%>
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="login.html">Regresar a Inicio de Sesión</a>
+</nav>
 
 <div class="container mt-4">
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 justify-content-center">
+      <small class="text-info">${MensajeExito}</small>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6 justify-content-center">
+      <small class="text-danger">${MensajeError}</small>
+    </div>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-md-8 form_box">
       <h2>Crear Nuevo Usuario</h2>
       <form action="${pageContext.request.contextPath}/usuario.do?op=agregarUsuario" method="post" id="formNuevoUsuario">
+        <div class="form-group">
+          <label for="id">Identificador de Usuario:</label>
+          <input type="number" class="form-control" id="id" name="id" required>
+        </div>
         <div class="form-group">
           <label for="nombre">Nombre:</label>
           <input type="text" class="form-control" id="nombre" name="nombre" required>

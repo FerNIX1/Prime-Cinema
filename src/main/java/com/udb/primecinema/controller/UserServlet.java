@@ -67,6 +67,7 @@ public class UserServlet extends HttpServlet {
     private void agregarUsuario(HttpServletRequest request, HttpServletResponse response) {
         try {
             // Recupera los parámetros del formulario
+            int id = Integer.parseInt(request.getParameter("id"));
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");
             int dui = Integer.parseInt(request.getParameter("dui"));
@@ -74,22 +75,41 @@ public class UserServlet extends HttpServlet {
             String telefono = request.getParameter("telefono");
             String email = request.getParameter("email");
 
-            // Crea un nuevo objeto UsuarioBeans
-            UsuarioBeans nuevoUsuario = new UsuarioBeans();
-            nuevoUsuario.setNombre(nombre);
-            nuevoUsuario.setApellido(apellido);
-            nuevoUsuario.setDUI(dui);
-            nuevoUsuario.setDireccion(direccion);
-            nuevoUsuario.setTelefono(telefono);
-            nuevoUsuario.setEmail(email);
+            //Verificar Datos
+            boolean datosRepetidos = modelo.VerificarDatosUnicos(id,dui);
 
-            // Llama al método en el modelo para agregar el usuario
-            modelo.AgregarUsuario(nuevoUsuario);
+            if(datosRepetidos){
+                request.setAttribute("MensajeError", "ID o DUI repetidos. Por favor intente con otros datos");
+            } else{
+                // Crea un nuevo objeto UsuarioBeans
+                UsuarioBeans nuevoUsuario = new UsuarioBeans();
+                nuevoUsuario.setID_Usuario(id);
+                nuevoUsuario.setNombre(nombre);
+                nuevoUsuario.setApellido(apellido);
+                nuevoUsuario.setDUI(dui);
+                nuevoUsuario.setDireccion(direccion);
+                nuevoUsuario.setTelefono(telefono);
+                nuevoUsuario.setEmail(email);
+
+                // Llama al método en el modelo para agregar el usuario
+                boolean registro_status =  modelo.AgregarUsuario(nuevoUsuario);
+
+                if(registro_status){
+                    request.setAttribute("MensajeExito", "Su registro fue exitoso, puede iniciar sesión");
+                } else {
+                    request.setAttribute("MensajeError", "Usuario no registrado.");
+                }
+            }
+
+
 
             // Redirige a la página deseada después de agregar el usuario
-            response.sendRedirect(request.getContextPath() + "/sucursales.do");
+            request.getRequestDispatcher("agregarUsuario.jsp").forward(request, response);
+
         } catch (SQLException | IOException | NumberFormatException exception) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, exception);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
         }
     }
 }

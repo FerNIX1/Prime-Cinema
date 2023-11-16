@@ -34,29 +34,53 @@ public class UsuariosModel extends Conexion {
             this.desconectar();
         }
     }
-    public void AgregarUsuario(UsuarioBeans nuevoUsuario) throws SQLException {
+    public boolean AgregarUsuario(UsuarioBeans nuevoUsuario) throws SQLException {
         try {
-            String sql = "INSERT INTO usuarios (Nombre,Apellido,DUI,Direccion,Telefono,Email) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO usuarios (ID_usuario,Nombre,Apellido,DUI,Direccion,Telefono,Email) VALUES (?, ?, ?, ?, ?, ?,?)";
             this.conectar();
             st = conexion.prepareStatement(sql);
-            st.setString(1, nuevoUsuario.getNombre());
-            st.setString(2, nuevoUsuario.getApellido());
-            st.setInt(3, nuevoUsuario.getDUI());
-            st.setString(4, nuevoUsuario.getDireccion());
-            st.setString(5, nuevoUsuario.getTelefono());
-            st.setString(6, nuevoUsuario.getEmail());
+            st.setInt(1, nuevoUsuario.getID_Usuario());
+            st.setString(2, nuevoUsuario.getNombre());
+            st.setString(3, nuevoUsuario.getApellido());
+            st.setInt(4, nuevoUsuario.getDUI());
+            st.setString(5, nuevoUsuario.getDireccion());
+            st.setString(6, nuevoUsuario.getTelefono());
+            st.setString(7, nuevoUsuario.getEmail());
 
             int affectedRows = st.executeUpdate();
 
             if (affectedRows > 0) {
-                System.out.println("Usuario agregado exitosamente.");
+                return true;
             } else {
-                System.out.println("Error al agregar el usuario.");
+                return false;
             }
         } catch (SQLException e) {
             Logger.getLogger(UsuariosModel.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         } finally {
             this.desconectar();
         }
     }
+    public boolean VerificarDatosUnicos(int id, int dui) throws SQLException {
+        try {
+            String sql = "SELECT * FROM `usuarios` WHERE `ID_usuario` = ? OR `DUI` = ?";
+            this.conectar();
+            st = conexion.prepareStatement(sql);
+            st.setInt(1, id);
+            st.setInt(2, dui);
+            rs =  st.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsuariosModel.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            this.desconectar();
+        }
+    }
+
 }
