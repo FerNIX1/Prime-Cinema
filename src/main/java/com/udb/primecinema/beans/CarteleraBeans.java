@@ -1,6 +1,7 @@
 package com.udb.primecinema.beans;
 
 public class CarteleraBeans {
+    private int ID_funcion;
     private int ID_sala;
     private String pelicula;
     private Double duracion;
@@ -10,8 +11,17 @@ public class CarteleraBeans {
 
     public CarteleraBeans() {
     }
-
     public CarteleraBeans(int ID_sala, String pelicula, Double duracion, String clasificacion, String genero, String formato) {
+        this.ID_sala = ID_sala;
+        this.pelicula = pelicula;
+        this.duracion = duracion;
+        this.clasificacion = clasificacion;
+        this.genero = genero;
+        this.formato = formato;
+    }
+
+    public CarteleraBeans(int ID_funcion, int ID_sala, String pelicula, Double duracion, String clasificacion, String genero, String formato) {
+        this.ID_funcion = ID_funcion;
         this.ID_sala = ID_sala;
         this.pelicula = pelicula;
         this.duracion = duracion;
@@ -66,5 +76,12 @@ public class CarteleraBeans {
 
     public void setFormato(String formato) {
         this.formato = formato;
+    }
+
+    public int getID_funcion() {
+        return ID_funcion;
+    }
+    public void setID_funcion(int ID_funcion) {
+        this.ID_funcion = ID_funcion;
     }
 }
