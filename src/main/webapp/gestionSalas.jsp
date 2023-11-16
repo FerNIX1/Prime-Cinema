@@ -57,6 +57,7 @@
                 <th>Sucursal</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
+                <th>Vaciar</th>
             </tr>
             </thead>
             <tbody>
@@ -70,6 +71,9 @@
                     </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/Salas.do?op=editar&id=${sala.ID_sala}" class="btn btn-primary">Modificar</a>
+                    </td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/Salas.do?op=Vaciar&id=${sala.ID_sala}" class="btn btn-warning">Vaciar Butacas</a>
                     </td>
                 </tr>
             </c:forEach>

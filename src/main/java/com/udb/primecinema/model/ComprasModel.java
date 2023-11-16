@@ -162,7 +162,7 @@ public class ComprasModel extends Conexion{
     public double CalcularVuelto(double precio, double efectivo){
         return efectivo - precio;
     }
-    private void VaciarFuncion(int ID_funcion) throws SQLException {
+    public void VaciarFuncion(int ID_funcion) throws SQLException {
         String sql = "UPDATE `butacas` SET `Ocupada` = 0 WHERE ID_funcion = ?";
         this.conectar();
         st = conexion.prepareStatement(sql);

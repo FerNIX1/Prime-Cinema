@@ -2,6 +2,7 @@ package com.udb.primecinema.controller;
 
 import com.udb.primecinema.beans.SalaBeans;
 import com.udb.primecinema.beans.SucursalBeans;
+import com.udb.primecinema.model.ComprasModel;
 import com.udb.primecinema.model.SalaModel;
 import com.udb.primecinema.model.SucursalModel;
 import jakarta.servlet.*;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 public class SalasServlet extends HttpServlet {
     SalaModel modelo = new SalaModel();
     SucursalModel modelo2 = new SucursalModel();
+    ComprasModel modelCompras = new ComprasModel();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,13 +39,16 @@ public class SalasServlet extends HttpServlet {
                      editar(request,response);
                 case "actualizar":
                     actualizar(request,response);
-
                 case "eliminar":
                     eliminar(request,response);
+                case "Vaciar":
+                    vaciar(request,response);
 
             }
         }
     }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      processRequest(request,response);
@@ -128,6 +133,15 @@ public class SalasServlet extends HttpServlet {
             // Redirigir a la página de listado después de la eliminación
             response.sendRedirect(request.getContextPath() + "/Salas.do?op=listartodo");
         } catch (SQLException | IOException e) {
+            Logger.getLogger(SalasServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    private void vaciar(HttpServletRequest request, HttpServletResponse response){
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            modelCompras.VaciarFuncion(id);
+            response.sendRedirect(request.getContextPath() + "/Salas.do?op=listartodo");
+        } catch (SQLException | IOException e){
             Logger.getLogger(SalasServlet.class.getName()).log(Level.SEVERE, null, e);
         }
     }
